@@ -1,5 +1,6 @@
 package br.com.caelum.twittelumapp.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
@@ -22,5 +23,10 @@ class ListaActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tweets)
 
         lista_tweet.adapter = adapter
+
+        fab_add.setOnClickListener {
+            val intencao = Intent(this, TweetActivity::class.java)
+            startActivity(intencao)
+        }
     }
 }
