@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import br.com.caelum.twittelumapp.R
+import br.com.caelum.twittelumapp.bancodedados.TwittelumDatabase
 import br.com.caelum.twittelumapp.modelo.Tweet
 import kotlinx.android.synthetic.main.activity_tweet.*
 
@@ -23,7 +24,11 @@ class TweetActivity : AppCompatActivity() {
 
         val mensagemDoTweet: String = tweet_mensagem.text.toString()
         val tweet = Tweet(mensagemDoTweet)
-        Toast.makeText(this, "$tweet", Toast.LENGTH_LONG).show()
+
+        val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
+        tweetDao.salva(tweet)
+
+        Toast.makeText(this, "$tweet foi salvo com sucesso :D", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
