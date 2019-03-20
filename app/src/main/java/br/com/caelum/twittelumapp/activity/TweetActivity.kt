@@ -1,17 +1,25 @@
 package br.com.caelum.twittelumapp.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
 import br.com.caelum.twittelumapp.R
 import br.com.caelum.twittelumapp.bancodedados.TwittelumDatabase
 import br.com.caelum.twittelumapp.modelo.Tweet
+import br.com.caelum.twittelumapp.viewmodel.TweetViewModel
+import br.com.caelum.twittelumapp.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_tweet.*
 
 class TweetActivity : AppCompatActivity() {
+
+    private val viewModel: TweetViewModel by lazy {
+        ViewModelProviders.of(this, ViewModelFactory).get(TweetViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,13 +28,11 @@ class TweetActivity : AppCompatActivity() {
     }
 
     private fun publicaTweet() {
-        Log.i("tweet", "botão clicado")
-
         val mensagemDoTweet: String = tweet_mensagem.text.toString()
+
         val tweet = Tweet(mensagemDoTweet)
 
-        val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
-        tweetDao.salva(tweet)
+        viewModel.salva(tweet)
 
         Toast.makeText(this, "$tweet foi salvo com sucesso :D", Toast.LENGTH_LONG).show()
     }

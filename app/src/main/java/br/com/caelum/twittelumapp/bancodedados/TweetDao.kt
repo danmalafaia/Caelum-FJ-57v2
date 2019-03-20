@@ -1,5 +1,6 @@
 package br.com.caelum.twittelumapp.bancodedados
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
@@ -12,5 +13,5 @@ interface TweetDao {
     fun salva(tweet: Tweet)
 
     @Query("select * from Tweet")
-    fun lista(): List<Tweet>
+    fun lista(): LiveData<List<Tweet>>
 }
