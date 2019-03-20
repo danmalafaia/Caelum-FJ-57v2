@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import br.com.caelum.twittelumapp.R
+import br.com.caelum.twittelumapp.modelo.Tweet
 import kotlinx.android.synthetic.main.activity_tweet.*
 
 class TweetActivity : AppCompatActivity() {
@@ -15,19 +16,14 @@ class TweetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweet)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
-//        criar_tweet.setOnClickListener {
-//            publicaTweet()
-//            finish()
-//        }
     }
 
     private fun publicaTweet() {
         Log.i("tweet", "botão clicado")
 
         val mensagemDoTweet: String = tweet_mensagem.text.toString()
-        Toast.makeText(this, mensagemDoTweet, Toast.LENGTH_LONG).show()
+        val tweet = Tweet(mensagemDoTweet)
+        Toast.makeText(this, "$tweet", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
