@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/tweet_menu_foto"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="Foto"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/tweet_menu_cadastrar"
         android:icon="@drawable/ic_save"
         android:title="Cadastrar"
