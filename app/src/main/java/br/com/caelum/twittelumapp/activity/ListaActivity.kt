@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import br.com.caelum.twittelumapp.R
+import br.com.caelum.twittelumapp.adapter.TweetAdapter
 import br.com.caelum.twittelumapp.modelo.Tweet
 import br.com.caelum.twittelumapp.viewmodel.TweetViewModel
 import br.com.caelum.twittelumapp.viewmodel.ViewModelFactory
@@ -42,7 +42,7 @@ class ListaActivity : AppCompatActivity() {
 
     private fun observer(): Observer<List<Tweet>> {
         return Observer {
-            lista_tweet.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
+            lista_tweet.adapter = TweetAdapter(it ?: listOf())
         }
     }
 
