@@ -51,9 +51,8 @@ class BuscadorDeTweetsFragment : Fragment() {
     }
 
     private fun filtraTweetsPelo(texto: String?): List<Tweet> {
-        val tweets = viewModel.tweets()
-        val tweetsFiltrados = tweets.filter { tweet -> tweet.mensagem.contains(texto!!, true) }
-        return tweetsFiltrados
+        val tweets = viewModel.tweets().value
+        return tweets?.filter { tweet -> tweet.mensagem.contains(texto!!, true) } ?: listOf()
     }
 
 }

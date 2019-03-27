@@ -1,6 +1,7 @@
 package br.com.caelum.twittelumappweb.activity
 
 import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Bitmap
@@ -19,6 +20,7 @@ import br.com.caelum.twittelumappweb.R
 import br.com.caelum.twittelumappweb.decodificaParaBase64
 import br.com.caelum.twittelumappweb.modelo.Tweet
 import br.com.caelum.twittelumappweb.viewmodel.TweetViewModel
+import br.com.caelum.twittelumappweb.viewmodel.UsuarioViewModel
 import br.com.caelum.twittelumappweb.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_tweet.*
 import java.io.File
@@ -26,9 +28,12 @@ import java.io.File
 
 class TweetActivity : AppCompatActivity() {
 
+    private val usuarioViewModel: UsuarioViewModel by lazy {
+        ViewModelProviders.of(this, ViewModelFactory).get(UsuarioViewModel::class.java)
+    }
+
     private lateinit var viewModel: TweetViewModel
     private var localFoto: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,14 @@ class TweetActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProviders.of(this, ViewModelFactory).get(TweetViewModel::class.java)
+
+        viewModel.falha().observe(this, Observer {
+            Toast.makeText(this, "erro: ${it?.message}", Toast.LENGTH_LONG).show()
+        })
+
+        viewModel.sucesso().observe(this, Observer {
+            Toast.makeText(this, "Tweet salvo!", Toast.LENGTH_LONG).show()
+        })
 
     }
 
@@ -97,16 +110,12 @@ class TweetActivity : AppCompatActivity() {
     }
 
     fun criaTweet(): Tweet {
-
         val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
-
         val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
-
         val foto: String? = tweet_foto.tag as String?
-
-        return Tweet(mensagemDoTweet, foto)
+        val dono = usuarioViewModel.usuarioDaSessao().value
+        return Tweet(mensagemDoTweet, foto, dono!!)
     }
-
 
     private fun tiraFoto() {
 
@@ -145,6 +154,5 @@ class TweetActivity : AppCompatActivity() {
         tweet_foto.scaleType = ImageView.ScaleType.FIT_XY
 
     }
-
 
 }
